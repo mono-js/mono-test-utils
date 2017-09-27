@@ -1,67 +1,78 @@
-# mono-module-starter
+# mono-test-utils
 
-Mono module starter for [Mono](https://github.com/terrajs/mono).
+Utils for testig with [Mono](https://github.com/terrajs/mono).
 
-## Installation
-
-```bash
-git clone --depth 1 git@github.com:terrajs/mono-module-starter.git mono-module-x
-cd mono-module-x/
-npm install
-```
-
-You need also to remove the git history and start a new one:
-
-```bash
-rm -r .git/
-git init
-```
-
-> :warning: When done, remove the section above and edit the section below (replace: `org-x` and `mono-module-x` by your GitHub username/org and module name)
-
-# mono-x
-
-[Mono](https://github.com/terrajs/mono) module for X.
-
-[![npm version](https://img.shields.io/npm/v/mono-module-x.svg)](https://www.npmjs.com/package/mono-module-x)
-[![Travis](https://img.shields.io/travis/org-x/mono-module-x/master.svg)](https://travis-ci.org/org-x/mono-module-x)
-[![Coverage](https://img.shields.io/codecov/c/github/org-x/mono-module-x/master.svg)](https://codecov.io/gh/org-x/mono-module-x.js)
-[![license](https://img.shields.io/github/license/org-x/mono-module-x.svg)](https://github.com/org-x/mono-module-x/blob/master/LICENSE)
+[![npm version](https://img.shields.io/npm/v/@terrajs/mono-test-utils.svg)](https://www.npmjs.com/package/@terrajs/mono-test-utils)
+[![Travis](https://img.shields.io/travis/terrajs/mono-test-utils/master.svg)](https://travis-ci.org/terrajs/mono-test-utils)
+[![Coverage](https://img.shields.io/codecov/c/github/terrajs/mono-test-utils/master.svg)](https://codecov.io/gh/terrajs/mono-test-utils)
+[![license](https://img.shields.io/github/license/org-x/mono-module-x.svg)](https://github.com/terrajs/mono-test-utils/blob/master/LICENSE)
 
 ## Installation
 
 ```bash
-npm install --save mono-module-x
+npm install --save-dev @terrajs/mono-test-utils
 ```
 
-Then, in your configuration file of your Mono application (example: `conf/application.js`):
+## Utils
 
 ```js
-module.exports = {
-  mono: {
-    modules: ['mono-module-x']
-  }
-}
+const { start, stop, $get, $post, $put, $del } = require('@terrajs/mono-test-utils')
 ```
 
-## Configuration
+Available methods:
 
-`mono-module-x` will use the `x` property of your configuration (example: `conf/development.js`):
+- `await start(dir)`: Start a Mono project from `dir` directory, returns `{ app, server, conf }`
+- `await stop(server)`: Stop Mono server
+
+Every of the following methods return an object with useful properties: `{ statusCode, headers, body, stdout, stderr }`.
+The `options` are the same of [request](https://github.com/request/request).
+
+- `await $get(path, options = {})`
+- `await $post(path, options = {})`
+- `await $put(path, options = {})`
+- `await $del(path, options = {})` (alias: `$delete`)
+
+Also available: `$head`, `$options` and `$patch`
+
+## Example
+
+Example of `test/index.js` with [ava](https://github.com/avajs/ava):
 
 ```js
-module.exports = {
-  x: {
-    /* Your module options */
-  }
-}
-```
+const test = require('ava')
+const { join } = require('path')
 
-## Usage
+const utils = require('../')
 
-In your `src/` files, you can access `x` like this:
+let ctx
 
-```js
-const { x } = require('mono-module-x')
+/*
+** Start the server
+*/
+test.before('Start Mono app', async (t) => {
+	ctx = await utils.start(join(__dirname, 'fixtures/example/'))
+})
 
-x.method(...)
+/*
+** Test API calls
+*/
+test('Call GET - /example', async (t) => {
+	const { stdout, stderr, statusCode, body } = await utils.$get('/example')
+	t.true(stdout[0].includes('GET /example'))
+	t.is(stderr.length, 0)
+	t.is(statusCode, 200)
+  // Imagine that GET - /example returns { hello: 'world' }
+	t.deepEqual(body.body, { hello: 'world' })
+})
+
+test('Call POST - /example', async (t) => {
+	const { statusCode, body } = await utils.$post('/example', {
+		body: { foo: 'bar' }
+	})
+	t.is(statusCode, 200)
+})
+
+test.after('Close Mono server', async (t) => {
+	await utils.close(ctx.server)
+})
 ```

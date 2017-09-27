@@ -33,7 +33,7 @@ Stop Mono server:
 await stop(server)
 ```
 
-Every of the following methods return an object with these properties: `{ statusCode, headers, body, stdout, stderr }`.
+Make HTTP requests to the API:
 
 ```js
 await $get(path, options = {})
@@ -45,6 +45,18 @@ await $del(path, options = {}) // alias: `$delete`
 Also available: `$head`, `$options` and `$patch`
 
 **INFO:** The `options` are the same as [request](https://github.com/request/request).
+
+Every of the following methods return an object with these properties:
+
+```js
+{
+  statusCode, // HTTP status code
+  headers, // Headers sent back
+  body, // Body of the response
+  stdout, // Logs written on stdout
+  stderr // LOgs written on stderr
+}
+```
 
 ## Example
 

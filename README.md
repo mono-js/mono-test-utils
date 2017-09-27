@@ -1,6 +1,6 @@
 # mono-test-utils
 
-Utils for testig with [Mono](https://github.com/terrajs/mono).
+Utils for testing your [Mono](https://github.com/terrajs/mono) project.
 
 [![npm version](https://img.shields.io/npm/v/@terrajs/mono-test-utils.svg)](https://www.npmjs.com/package/@terrajs/mono-test-utils)
 [![Travis](https://img.shields.io/travis/terrajs/mono-test-utils/master.svg)](https://travis-ci.org/terrajs/mono-test-utils)

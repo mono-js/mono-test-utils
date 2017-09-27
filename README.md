@@ -21,15 +21,26 @@ const { start, stop, $get, $post, $put, $del } = require('@terrajs/mono-test-uti
 
 Available methods:
 
-- `await start(dir)`: Start a Mono project from `dir` directory, returns `{ app, server, conf }`
-- `await stop(server)`: Stop Mono server
+Start a Mono project from `dir` directory:
 
-Every of the following methods return an object with useful properties: `{ statusCode, headers, body, stdout, stderr }`.
+```js
+const { app, server, conf } = await start(dir)
+```
 
-- `await $get(path, options = {})`
-- `await $post(path, options = {})`
-- `await $put(path, options = {})`
-- `await $del(path, options = {})` (alias: `$delete`)
+Stop Mono server:
+
+```js
+await stop(server)
+```
+
+Every of the following methods return an object with these properties: `{ statusCode, headers, body, stdout, stderr }`.
+
+```js
+await $get(path, options = {})
+await $post(path, options = {})
+await $put(path, options = {})
+await $del(path, options = {}) // alias: `$delete`
+```
 
 Also available: `$head`, `$options` and `$patch`
 
@@ -43,7 +54,7 @@ Example of `test/index.js` with [ava](https://github.com/avajs/ava):
 const test = require('ava')
 const { join } = require('path')
 
-const utils = require('../')
+const { start, stop, $get, $post } = require('@terrajs/mono-test-utils')
 
 let ctx
 
@@ -51,14 +62,14 @@ let ctx
 ** Start the server
 */
 test.before('Start Mono app', async (t) => {
-	ctx = await utils.start(join(__dirname, 'fixtures/example/'))
+	ctx = await start(join(__dirname, 'fixtures/example/'))
 })
 
 /*
 ** Test API calls
 */
 test('Call GET - /example', async (t) => {
-	const { stdout, stderr, statusCode, body } = await utils.$get('/example')
+	const { stdout, stderr, statusCode, body } = await $get('/example')
 	t.true(stdout[0].includes('GET /example'))
 	t.is(stderr.length, 0)
 	t.is(statusCode, 200)
@@ -67,13 +78,13 @@ test('Call GET - /example', async (t) => {
 })
 
 test('Call POST - /example', async (t) => {
-	const { statusCode, body } = await utils.$post('/example', {
+	const { statusCode, body } = await $post('/example', {
 		body: { foo: 'bar' }
 	})
 	t.is(statusCode, 200)
 })
 
 test.after('Close Mono server', async (t) => {
-	await utils.close(ctx.server)
+	await close(ctx.server)
 })
 ```

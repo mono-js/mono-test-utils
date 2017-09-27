@@ -51,8 +51,8 @@ Every of the following methods return an object with these properties:
   statusCode, // HTTP status code
   headers, // Headers sent back
   body, // Body of the response
-  stdout, // Logs written on stdout
-  stderr // LOgs written on stderr
+  stdout, // Logs written on stdout during the request
+  stderr // Logs written on stderr during the request
 }
 ```
 

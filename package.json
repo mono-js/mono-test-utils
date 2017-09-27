@@ -1,0 +1,51 @@
+{
+  "name": "mono-test-utils",
+  "version": "1.0.0",
+  "description": "Mono Test Utils",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "lint": "eslint 'lib/*.js'",
+    "test": "npm run lint && nyc ava --verbose --serial test/ && nyc report --reporter=html",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "preversion": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/terrajs/mono-test-utils.git"
+  },
+  "nyc": {
+    "include": [
+      "lib/"
+    ]
+  },
+  "contributors": [
+    {
+      "name": "Sebastien Chopin (@Atinux)"
+    },
+    {
+      "name": "Benjamin Canac (@benjamincanac)"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "request": "^2.83.0",
+    "request-promise-native": "^1.0.5",
+    "std-mocks": "^1.0.1"
+  },
+  "peerDependencies": {
+    "@terrajs/mono": "latest"
+  },
+  "devDependencies": {
+    "ava": "^0.22.0",
+    "codecov": "^2.3.0",
+    "eslint": "^4.7.2",
+    "nyc": "^11.2.1"
+  },
+  "keywords": [
+    "mono",
+    "mono-module"
+  ]
+}

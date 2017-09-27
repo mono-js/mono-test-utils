@@ -68,16 +68,12 @@ const { start, stop, $get, $post } = require('@terrajs/mono-test-utils')
 
 let ctx
 
-/*
-** Start the server
-*/
+// Start server
 test.before('Start Mono app', async (t) => {
 	ctx = await start(join(__dirname, 'fixtures/example/'))
 })
 
-/*
-** Test API calls
-*/
+// Test API Endpoints
 test('Call GET - /example', async (t) => {
 	const { stdout, stderr, statusCode, body } = await $get('/example')
 	t.true(stdout[0].includes('GET /example'))
@@ -86,7 +82,6 @@ test('Call GET - /example', async (t) => {
   // Imagine that GET - /example returns { hello: 'world' }
 	t.deepEqual(body.body, { hello: 'world' })
 })
-
 test('Call POST - /example', async (t) => {
 	const { statusCode, body } = await $post('/example', {
 		body: { foo: 'bar' }
@@ -94,6 +89,7 @@ test('Call POST - /example', async (t) => {
 	t.is(statusCode, 200)
 })
 
+// Close server
 test.after('Close Mono server', async (t) => {
 	await close(ctx.server)
 })

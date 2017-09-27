@@ -19,8 +19,6 @@ npm install --save-dev @terrajs/mono-test-utils
 const { start, stop, $get, $post, $put, $del } = require('@terrajs/mono-test-utils')
 ```
 
-Available methods:
-
 Start a Mono project from `dir` directory:
 
 ```js

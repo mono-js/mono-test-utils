@@ -1,5 +1,5 @@
 {
-  "name": "mono-test-utils",
+  "name": "@terrajs/mono-test-utils",
   "version": "1.0.0",
   "description": "Mono Test Utils",
   "main": "lib/index.js",
@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "lint": "eslint 'lib/*.js'",
-    "test": "npm run lint && nyc ava --verbose --serial test/ && nyc report --reporter=html",
+    "test": "npm run lint && nyc ava --serial --verbose test/ && nyc report --reporter=html",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "preversion": "npm test"
   },
@@ -39,6 +39,7 @@
     "@terrajs/mono": "latest"
   },
   "devDependencies": {
+    "@terrajs/mono": "^0.4.3",
     "ava": "^0.22.0",
     "codecov": "^2.3.0",
     "eslint": "^4.7.2",

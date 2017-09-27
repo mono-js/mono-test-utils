@@ -25,7 +25,6 @@ Available methods:
 - `await stop(server)`: Stop Mono server
 
 Every of the following methods return an object with useful properties: `{ statusCode, headers, body, stdout, stderr }`.
-The `options` are the same of [request](https://github.com/request/request).
 
 - `await $get(path, options = {})`
 - `await $post(path, options = {})`
@@ -33,6 +32,8 @@ The `options` are the same of [request](https://github.com/request/request).
 - `await $del(path, options = {})` (alias: `$delete`)
 
 Also available: `$head`, `$options` and `$patch`
+
+**INFO:** The `options` are the same as [request](https://github.com/request/request).
 
 ## Example
 

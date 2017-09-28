@@ -14,6 +14,7 @@ test.before('Start mono app', async (t) => {
 
 test('Fail mono app with bad port', async (t) => {
 	const error = await t.throws(utils.start(join(__dirname, 'fixtures/fail/')), Error)
+	t.true(error.stdout.join().includes('Environment: test'))
 	t.is(error.message, 'Port 80 requires elevated privileges')
 })
 /*

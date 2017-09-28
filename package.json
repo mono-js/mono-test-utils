@@ -1,6 +1,6 @@
 {
   "name": "@terrajs/mono-test-utils",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Mono Test Utils",
   "main": "lib/index.js",
   "files": [

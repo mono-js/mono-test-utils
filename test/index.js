@@ -12,6 +12,10 @@ test.before('Start mono app', async (t) => {
 	ctx = await utils.start(join(__dirname, 'fixtures/example/'))
 })
 
+test('Fail mono app with bad port', async (t) => {
+	const error = await t.throws(utils.start(join(__dirname, 'fixtures/fail/')), Error)
+	t.is(error.message, 'Port 80 requires elevated privileges')
+})
 /*
 ** Test API calls
 */
@@ -89,11 +93,11 @@ test('$head', async (t) => {
 	t.falsy(body)
 })
 
-test('close(server) with no server', (t) => {
-	const error = t.throws(() => utils.close(), Error)
-	t.is(error.message, 'No server provided to close(server)')
+test('stop(server) with no server', (t) => {
+	const error = t.throws(() => utils.stop(), Error)
+	t.is(error.message, 'No server provided to stop(server)')
 })
 
-test.after('Close server', async (t) => {
-	await utils.close(ctx.server)
+test.after('Stop mono server', async (t) => {
+	await utils.stop(ctx.server)
 })

@@ -19,7 +19,7 @@ npm install --save-dev @terrajs/mono-test-utils
 const { start, stop, $get, $post, $put, $del } = require('@terrajs/mono-test-utils')
 ```
 
-Start a Mono project from `dir` directory:
+Start a Mono project from `dir` directory with `NODE_ENV=test`:
 
 ```js
 const { app, server, conf } = await start(dir)

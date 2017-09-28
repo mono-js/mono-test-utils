@@ -7,8 +7,8 @@
     "lib"
   ],
   "scripts": {
-    "lint": "eslint 'lib/*.js'",
-    "test": "npm run lint && nyc ava --serial --verbose test/ && nyc report --reporter=html",
+    "lint": "eslint lib/**",
+    "test": "npm run lint && nyc ava --fail-fast --serial --verbose test/ && nyc report --reporter=html",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "preversion": "npm test"
   },

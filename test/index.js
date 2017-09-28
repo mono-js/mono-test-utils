@@ -13,7 +13,6 @@ test('Fail mono app with bad port', async (t) => {
 	t.true(error.stdout.join().includes('Environment: test'))
 	t.is(error.message, 'Port 80 requires elevated privileges')
 })
-
 test('start(dir, { env: "development" })', async (t) => {
 	const { server, app, conf } = await utils.start(join(__dirname, 'fixtures/example/'), { env: 'development' })
 	t.is(conf.env, 'development')

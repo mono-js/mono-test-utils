@@ -50,6 +50,7 @@
   },
   "keywords": [
     "mono",
-    "mono-module"
+    "mono-utils",
+    "mono-test-utils"
   ]
 }

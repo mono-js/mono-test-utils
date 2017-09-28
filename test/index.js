@@ -8,15 +8,24 @@ let ctx
 /*
 ** Start the server
 */
-test.before('Start mono app', async (t) => {
-	ctx = await utils.start(join(__dirname, 'fixtures/example/'))
-})
-
 test('Fail mono app with bad port', async (t) => {
 	const error = await t.throws(utils.start(join(__dirname, 'fixtures/fail/')), Error)
 	t.true(error.stdout.join().includes('Environment: test'))
 	t.is(error.message, 'Port 80 requires elevated privileges')
 })
+
+test('start(dir, { env: "development" })', async (t) => {
+	const { server, app, conf } = await utils.start(join(__dirname, 'fixtures/example/'), { env: 'development' })
+	t.is(conf.env, 'development')
+	t.is(app.get('env'), 'development')
+	t.is(conf.mono.http.port, 5555)
+	await utils.stop(server)
+})
+test('Start mono app (env: test)', async (t) => {
+	ctx = await utils.start(join(__dirname, 'fixtures/example/'))
+	t.is(ctx.conf.mono.http.port, 5678)
+})
+
 /*
 ** Test API calls
 */

@@ -42,7 +42,7 @@
     "@terrajs/mono": "latest"
   },
   "devDependencies": {
-    "@terrajs/mono": "^0.4.3",
+    "@terrajs/mono": "latest",
     "ava": "^0.22.0",
     "codecov": "^2.3.0",
     "eslint": "^4.7.2",

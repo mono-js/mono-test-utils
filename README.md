@@ -22,7 +22,16 @@ const { start, stop, $get, $post, $put, $del } = require('@terrajs/mono-test-uti
 Start a Mono project from `dir` directory with `NODE_ENV=test`:
 
 ```js
-const { app, server, conf } = await start(dir)
+const { app, server, conf } = await start(dir, options = {})
+```
+
+Default `options`:
+
+```js
+{
+  env: 'test',
+  monoPath: '@terrajs/mono'
+}
 ```
 
 Stop Mono server:

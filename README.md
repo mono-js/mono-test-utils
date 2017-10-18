@@ -2,7 +2,7 @@
 
 Utils for testing your [Mono](https://github.com/terrajs/mono) project.
 
-[![npm version](https://img.shields.io/npm/v/@terrajs/mono-test-utils.svg)](https://www.npmjs.com/package/@terrajs/mono-test-utils)
+[![npm version](https://img.shields.io/npm/v/mono-test-utils.svg)](https://www.npmjs.com/package/mono-test-utils)
 [![Travis](https://img.shields.io/travis/terrajs/mono-test-utils/master.svg)](https://travis-ci.org/terrajs/mono-test-utils)
 [![Coverage](https://img.shields.io/codecov/c/github/terrajs/mono-test-utils/master.svg)](https://codecov.io/gh/terrajs/mono-test-utils)
 [![license](https://img.shields.io/github/license/org-x/mono-module-x.svg)](https://github.com/terrajs/mono-test-utils/blob/master/LICENSE)
@@ -10,13 +10,13 @@ Utils for testing your [Mono](https://github.com/terrajs/mono) project.
 ## Installation
 
 ```bash
-npm install --save-dev @terrajs/mono-test-utils
+npm install --save-dev mono-test-utils
 ```
 
 ## Utils
 
 ```js
-const { start, stop, $get, $post, $put, $del } = require('@terrajs/mono-test-utils')
+const { start, stop, $get, $post, $put, $del } = require('mono-test-utils')
 ```
 
 Start a Mono project from `dir` directory with `NODE_ENV=test`:
@@ -73,7 +73,7 @@ Example of `test/index.js` with [ava](https://github.com/avajs/ava):
 const test = require('ava')
 const { join } = require('path')
 
-const { start, stop, $get, $post } = require('@terrajs/mono-test-utils')
+const { start, stop, $get, $post } = require('mono-test-utils')
 
 let ctx
 
@@ -91,6 +91,7 @@ test('Call GET - /example', async (t) => {
   // Imagine that GET - /example returns { hello: 'world' }
 	t.deepEqual(body.body, { hello: 'world' })
 })
+
 test('Call POST - /example', async (t) => {
 	const { statusCode, body } = await $post('/example', {
 		body: { foo: 'bar' }

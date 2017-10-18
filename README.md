@@ -16,7 +16,7 @@ npm install --save-dev mono-test-utils
 ## Utils
 
 ```js
-const { start, stop, $get, $post, $put, $del } = require('mono-test-utils')
+const { start, stop, url, $get, $post, $put, $del } = require('mono-test-utils')
 ```
 
 Start a Mono project from `dir` directory with `NODE_ENV=test`:
@@ -38,6 +38,15 @@ Stop Mono server:
 
 ```js
 await stop(server)
+```
+
+Get the url of your mono server:
+
+```js
+// return http://localhost:8000 (port updates depending of your mono conf
+url()
+// return http://localhost:8000/test
+url('/test')
 ```
 
 Make HTTP requests to the API:

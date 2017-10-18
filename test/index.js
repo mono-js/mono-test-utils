@@ -26,6 +26,18 @@ test('Start mono app (env: test)', async (t) => {
 })
 
 /*
+** url(path)
+*/
+test('url()', async (t) => {
+	const url = await utils.url()
+	t.is(url, 'http://localhost:5678/')
+})
+test('url("/test")', async (t) => {
+	const url = await utils.url('/test')
+	t.is(url, 'http://localhost:5678/test')
+})
+
+/*
 ** Test API calls
 */
 test('$get', async (t) => {

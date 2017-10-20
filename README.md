@@ -16,13 +16,26 @@ npm install --save-dev mono-test-utils
 ## Utils
 
 ```js
-const { start, stop, url, $get, $post, $put, $del } = require('mono-test-utils')
+const {
+  start, stop,
+  url,
+  mockStd, restoreStd
+  $get, $post, $put, $del
+} = require('mono-test-utils')
 ```
 
-Start a Mono project from `dir` directory with `NODE_ENV=test`:
+## Contents
+
+- [Start & Stop Mono]()
+- [Get Mono url]()
+- [Mock stdout and stderr]()
+- [Make API calls]()
+
+### Start a Mono project from `dir` directory with `NODE_ENV=test`:
 
 ```js
-const { app, server, conf } = await start(dir, options = {})
+const context = await start(dir, options = {})
+// context = { log, conf, app, server, stdout, stderr }
 ```
 
 Default `options`:
@@ -34,22 +47,42 @@ Default `options`:
 }
 ```
 
-Stop Mono server:
+### Stop Mono server:
 
 ```js
-await stop(server)
+await stop(context.server)
 ```
 
-Get the url of your mono server:
+### Get the url of your mono server:
 
 ```js
-// return http://localhost:8000 (port updates depending of your mono conf
 url()
-// return http://localhost:8000/test
+// http://localhost:8000 (port updates depending of the mono conf)
 url('/test')
+// http://localhost:8000/test
+```
+### Mock `stdout` and `stderr`
+
+This is useful for capturing logs (based on [std-mocks](https://github.com/neoziro/std-mocks)).
+
+Example:
+
+```js
+// Start mocking stdout and stderr
+stdMock()
+
+console.log('test log')
+console.error('test error')
+
+const { stdout, stderr } = stdRestore()
+// stdout = ['test log\n']
+// stderr = ['test error\n']
 ```
 
-Make HTTP requests to the API:
+- `stdMock()` will call `stdMocks.use(options)`
+- `stdRestore()` will call `stdMocks.restore()` and return `stdMocks.flush()`.
+
+### Make HTTP requests to the API:
 
 ```js
 await $get(path, options = {})
@@ -84,32 +117,32 @@ const { join } = require('path')
 
 const { start, stop, $get, $post } = require('mono-test-utils')
 
-let ctx
+let context
 
 // Start server
 test.before('Start Mono app', async (t) => {
-	ctx = await start(join(__dirname, 'fixtures/example/'))
+  context = await start(join(__dirname, 'fixtures/example/'))
 })
 
 // Test API Endpoints
 test('Call GET - /example', async (t) => {
-	const { stdout, stderr, statusCode, body } = await $get('/example')
-	t.true(stdout[0].includes('GET /example'))
-	t.is(stderr.length, 0)
-	t.is(statusCode, 200)
+  const { stdout, stderr, statusCode, body } = await $get('/example')
+  t.true(stdout[0].includes('GET /example'))
+  t.is(stderr.length, 0)
+  t.is(statusCode, 200)
   // Imagine that GET - /example returns { hello: 'world' }
-	t.deepEqual(body.body, { hello: 'world' })
+  t.deepEqual(body.body, { hello: 'world' })
 })
 
 test('Call POST - /example', async (t) => {
-	const { statusCode, body } = await $post('/example', {
-		body: { foo: 'bar' }
-	})
-	t.is(statusCode, 200)
+  const { statusCode, body } = await $post('/example', {
+    body: { foo: 'bar' }
+  })
+  t.is(statusCode, 200)
 })
 
 // Close server
 test.after('Close Mono server', async (t) => {
-	await close(ctx.server)
+  await close(context.server)
 })
 ```

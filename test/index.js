@@ -38,6 +38,18 @@ test('url("/test")', async (t) => {
 })
 
 /*
+** stdMock() and stdRestore()
+*/
+test('stdMock() and stdRestore()', async (t) => {
+	utils.stdMock()
+	console.log('log test') // eslint-disable-line no-console
+	console.error('log error') // eslint-disable-line no-console
+	const { stdout, stderr } = utils.stdRestore()
+	t.deepEqual(stdout, ['log test\n'])
+	t.deepEqual(stderr, ['log error\n'])
+})
+
+/*
 ** Test API calls
 */
 test('$get', async (t) => {

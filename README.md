@@ -19,7 +19,7 @@ npm install --save-dev mono-test-utils
 const {
   start, stop,
   url,
-  mockStd, restoreStd
+  stdMock, stdRestore
   $get, $post, $put, $del
 } = require('mono-test-utils')
 ```

@@ -1,6 +1,6 @@
 {
   "name": "mono-test-utils",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Mono Test Utils",
   "main": "lib/index.js",
   "files": [

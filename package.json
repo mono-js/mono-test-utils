@@ -7,7 +7,7 @@
     "lib"
   ],
   "scripts": {
-    "lint": "eslint lib/**",
+    "lint": "eslint lib/ test/",
     "test": "npm run lint && nyc ava --fail-fast --serial --verbose test/ && nyc report --reporter=html",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "preversion": "npm test"
@@ -36,6 +36,7 @@
   "dependencies": {
     "request": "^2.83.0",
     "request-promise-native": "^1.0.5",
+    "server-destroy": "^1.0.1",
     "std-mocks": "^1.0.1"
   },
   "peerDependencies": {

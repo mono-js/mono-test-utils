@@ -131,6 +131,6 @@ test('stop(server) with no server', (t) => {
 	t.is(error.message, 'No server provided to stop(server)')
 })
 
-test.after('Stop mono server', async (t) => {
+test.after('Stop mono server', async () => {
 	await utils.stop(ctx.server)
 })

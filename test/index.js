@@ -36,6 +36,10 @@ test('url("/test")', async (t) => {
 	const url = await utils.url('/test')
 	t.is(url, 'http://localhost:5678/test')
 })
+test('url("https://www.google.com")', async (t) => {
+	const url = await utils.url('https://www.google.com')
+	t.is(url, 'https://www.google.com')
+})
 
 /*
 ** stdMock() and stdRestore()

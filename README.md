@@ -26,10 +26,11 @@ const {
 
 ## Contents
 
-- [Start & Stop Mono]()
-- [Get Mono url]()
-- [Mock stdout and stderr]()
-- [Make API calls]()
+- [Start Mono server](#start-a-mono-project-from-dir-directory-with-node_envtest)
+- [Stop Mono server](#stop-mono-server)
+- [Mock stdout & stderr](#mock-stdout-and-stderr)
+- [Get Mono url](#get-the-url-of-your-mono-server)
+- [Make API calls](#make-http-requests-to-the-api)
 
 ### Start a Mono project from `dir` directory with `NODE_ENV=test`:
 

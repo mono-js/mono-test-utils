@@ -47,7 +47,7 @@
     "@terrajs/mono": "latest",
     "ava": "0.25.0",
     "codecov": "3.0.0",
-    "eslint": "4.11.0",
+    "eslint": "4.19.0",
     "nyc": "11.3.0"
   },
   "keywords": [

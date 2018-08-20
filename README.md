@@ -44,7 +44,7 @@ Default `options`:
 ```js
 {
   env: 'test',
-  monoPath: '@terrajs/mono'
+  monoPath: 'mono-core'
 }
 ```
 
